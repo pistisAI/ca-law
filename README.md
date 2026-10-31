@@ -98,11 +98,12 @@ Every adapter must:
 | `youth_protection/nb_fsa.py` | laws.gnb.ca | s.31(1) (endangerment), s.32(1) (protective care), s.1 (best interests) ✓ (repealed 2023) |
 | `youth_protection/nl_cyfa.py` | assembly.nl.ca | s.9 (best interests), s.10 (protection def), s.11 (duty to report) ✓ |
 | `youth_protection/pei_cpa.py` | princeedwardisland.ca | s.9 (protection def), s.2(2) (best interests), s.13 (intervention) ✓ (repealed 2024) |
+| `youth_protection/sk_cfs.py` | publications.saskatchewan.ca | s.11 (protection def), s.4 (best interests), s.17 (apprehension) ✓ |
 | `youth_protection/yt_cfs.py` | laws.yukon.ca | s.2 (protection def), s.21 (duty to report), s.53 (best interests) ✓ |
 | `youth_protection/mb_cfs.py` | web2.gov.mb.ca | s.17 (protection def), s.2.1 (best interests), s.21 (apprehension) ✓ |
 | `youth_protection/nt_cfs.py` | gnwt.ca (PDF) | s.3 (best interests), s.7 (protection), s.11 (apprehension) ✓ |
 
-**Stubs** (structure in place, need proper parsers): AB CYFEA, SK CFS, NS CFSA, NU CFSA.
+**Stubs** (structure in place, need proper parsers): AB CYFEA, NS CFSA, NU CFSA.
 
 ---
 
