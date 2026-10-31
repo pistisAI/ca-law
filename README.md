@@ -28,7 +28,7 @@ scripts/
     ├── bc_cfcsa.py              # BC CFCSA ✓ VERIFIED (s.4, s.13, s.30)
     ├── ab_cyfea.py              # AB CYFEA (stub → needs PDF parser)
     ├── sk_cfs.py                # SK CFS (stub → needs PDF parser)
-    ├── mb_cfs.py                # MB CFS (stub → needs HTML parser)
+    ├── mb_cfs.py                # MB CFS ✓ VERIFIED (s.17, s.2.1, s.21)
     ├── ns_cfs.py                # NS CFSA (stub → needs PDF parser)
     ├── nb_fsa.py                # NB FSA ✓ VERIFIED (s.31(1), s.32(1), s.1; repealed 2023)
     ├── nl_cyfa.py               # NL CYFA ✓ VERIFIED (s.9, s.10, s.11)
@@ -38,8 +38,6 @@ scripts/
     ├── nu_cfs.py                # NU CFSA (stub → needs HTML parser)
     └── __init__.py              # Re-exports working adapters
 ```
-
-> **QC is now in `provinces/qc_law.py`** — same folder as other province adapters. The `youth_protection/qc_lpj.py` wraps it via `Path(__file__).parents[1] / "provinces" / "qc_law.py"`.
 
 ---
 
@@ -101,9 +99,10 @@ Every adapter must:
 | `youth_protection/nl_cyfa.py` | assembly.nl.ca | s.9 (best interests), s.10 (protection def), s.11 (duty to report) ✓ |
 | `youth_protection/pei_cpa.py` | princeedwardisland.ca | s.9 (protection def), s.2(2) (best interests), s.13 (intervention) ✓ (repealed 2024) |
 | `youth_protection/yt_cfs.py` | laws.yukon.ca | s.2 (protection def), s.21 (duty to report), s.53 (best interests) ✓ |
+| `youth_protection/mb_cfs.py` | web2.gov.mb.ca | s.17 (protection def), s.2.1 (best interests), s.21 (apprehension) ✓ |
 | `youth_protection/nt_cfs.py` | gnwt.ca (PDF) | s.3 (best interests), s.7 (protection), s.11 (apprehension) ✓ |
 
-**Stubs** (structure in place, need proper parsers): AB CYFEA, SK CFS, MB CFS, NS CFSA, NU CFSA.
+**Stubs** (structure in place, need proper parsers): AB CYFEA, SK CFS, NS CFSA, NU CFSA.
 
 ---
 
