@@ -9,8 +9,8 @@
 ```
 scripts/
 ├── ca_law.py                    # Federal: Criminal Code (Justice Laws XML)
-├── qc_law.py                    # Québec: CCQ-1991, LPJ, etc. (Légis Québec HTML)
-├── provinces/                   # 11 province/territory adapters
+├── provinces/                   # 12 province/territory adapters
+│   ├── qc_law.py                # Québec: CCQ-1991, LPJ, etc. (Légis Québec HTML)
 │   ├── on_law.py                # Ontario (e-Laws JSON API)
 │   ├── bc_law.py                # British Columbia (BC Laws HTML)
 │   ├── ab_law.py                # Alberta (King's Printer PDF)
@@ -23,24 +23,23 @@ scripts/
 │   ├── yt_law.py                # Yukon (PDF)
 │   └── nt_law.py                # Northwest Territories (PDF)
 └── youth_protection/            # Child services / youth protection acts (13 jurisdictions)
-    ├── qc_lpj.py                # Québec LPJ (P-34.1) — wraps qc_law.py ✓ VERIFIED
-    ├── on_cyfsa.py              # Ontario CYFSA (stub → needs e-Laws parser)
-    ├── bc_cfcsa.py              # BC CFCSA (stub → needs bclaws parser)
+    ├── qc_lpj.py                # Québec LPJ (P-34.1) — wraps provinces/qc_law.py ✓ VERIFIED
+    ├── on_cyfsa.py              # Ontario CYFSA ✓ VERIFIED (s.1, s.74, s.101)
+    ├── bc_cfcsa.py              # BC CFCSA ✓ VERIFIED (s.4, s.13, s.30)
     ├── ab_cyfea.py              # AB CYFEA (stub → needs PDF parser)
     ├── sk_cfs.py                # SK CFS (stub → needs PDF parser)
     ├── mb_cfs.py                # MB CFS (stub → needs HTML parser)
     ├── ns_cfs.py                # NS CFSA (stub → needs PDF parser)
-    ├── nb_fsa.py                # NB FSA (stub → needs HTML parser)
-    ├── nl_cyfa.py               # NL CYFA (stub → needs HTML parser)
-    ├── pei_cpa.py               # PEI CPA (stub → needs PDF parser)
-    ├── yt_cfs.py                # YT CFSA (stub → needs PDF parser)
+    ├── nb_fsa.py                # NB FSA ✓ VERIFIED (s.31(1), s.32(1), s.1; repealed 2023)
+    ├── nl_cyfa.py               # NL CYFA ✓ VERIFIED (s.9, s.10, s.11)
+    ├── pei_cpa.py               # PEI CPA ✓ VERIFIED (s.9, s.2(2), s.13; repealed 2024)
+    ├── yt_cfs.py                # YT CFSA ✓ VERIFIED (s.2, s.21, s.53)
     ├── nt_cfs.py                # NT CFSA ✓ VERBATIM from GNWT PDF
     ├── nu_cfs.py                # NU CFSA (stub → needs HTML parser)
     └── __init__.py              # Re-exports working adapters
 ```
 
-> **Why is QC not in `provinces/`?**  
-> Québec's statutes live on **Légis Québec** (HTML with column-split layout), which required a fundamentally different parser (`qc_law.py`) than the other provinces. The `provinces/` folder holds the "standard" province adapters that each fetch from their own source; QC's parser is complex enough to sit at the top level and is reused by `youth_protection/qc_lpj.py`.
+> **QC is now in `provinces/qc_law.py`** — same folder as other province adapters. The `youth_protection/qc_lpj.py` wraps it via `Path(__file__).parents[1] / "provinces" / "qc_law.py"`.
 
 ---
 
@@ -52,8 +51,8 @@ python -m scripts.ca_law C-46 266        # s. 266 Assault
 python -m scripts.ca_law C-46 145 --sub 4 --para a  # s. 145(4)(a)
 
 # Québec (CCQ-1991, LPJ, etc.)
-python -m scripts.qc_law CCQ-1991 1457   # Civil Code art. 1457
-python -m scripts.qc_law P-34.1 38       # LPJ art. 38 (compromise grounds)
+python -m scripts.provinces.qc_law CCQ-1991 1457   # Civil Code art. 1457
+python -m scripts.provinces.qc_law P-34.1 38       # LPJ art. 38 (compromise grounds)
 
 # Province adapters
 python -m scripts.provinces.on_law "Children's Law Reform Act" 21
@@ -83,7 +82,7 @@ Every adapter must:
 | Adapter | Source | Key Sections Verified |
 |---------|--------|----------------------|
 | `ca_law.py` (federal) | laws.justice.gc.ca (XML) | C-46 s.266, s.267, s.145(4)(a) |
-| `qc_law.py` | legisquebec.gouv.qc.ca | CCQ-1991 art.1457, LPJ P-34.1 art.2,3,38 |
+| `provinces/qc_law.py` | legisquebec.gouv.qc.ca | CCQ-1991 art.1457, LPJ P-34.1 art.2,3,38 |
 | `provinces/on_law.py` | e-Laws Ontario | (structure verified) |
 | `provinces/bc_law.py` | bclaws.gov.bc.ca | (structure verified) |
 | `provinces/ab_law.py` | kings-printer.alberta.ca | (structure verified) |
@@ -96,9 +95,15 @@ Every adapter must:
 | `provinces/yt_law.py` | laws.yukon.ca | (structure verified) |
 | `provinces/nt_law.py` | gnwt.ca | (structure verified) |
 | `youth_protection/qc_lpj.py` | legisquebec.gouv.qc.ca | LPJ art.2,3,38 ✓ |
+| `youth_protection/on_cyfsa.py` | e-Laws Ontario | s.1 (best interests), s.74 (protection def), s.101 (intervention) ✓ |
+| `youth_protection/bc_cfcsa.py` | bclaws.gov.bc.ca | s.4 (best interests), s.13 (protection def), s.30 (intervention) ✓ |
+| `youth_protection/nb_fsa.py` | laws.gnb.ca | s.31(1) (endangerment), s.32(1) (protective care), s.1 (best interests) ✓ (repealed 2023) |
+| `youth_protection/nl_cyfa.py` | assembly.nl.ca | s.9 (best interests), s.10 (protection def), s.11 (duty to report) ✓ |
+| `youth_protection/pei_cpa.py` | princeedwardisland.ca | s.9 (protection def), s.2(2) (best interests), s.13 (intervention) ✓ (repealed 2024) |
+| `youth_protection/yt_cfs.py` | laws.yukon.ca | s.2 (protection def), s.21 (duty to report), s.53 (best interests) ✓ |
 | `youth_protection/nt_cfs.py` | gnwt.ca (PDF) | s.3 (best interests), s.7 (protection), s.11 (apprehension) ✓ |
 
-**Stubs** (structure in place, need proper parsers): ON CYFSA, BC CFCSA, AB CYFEA, SK CFS, MB CFS, NS CFSA, NB FSA, NL CYFA, PEI CPA, YT CFSA, NU CFSA.
+**Stubs** (structure in place, need proper parsers): AB CYFEA, SK CFS, MB CFS, NS CFSA, NU CFSA.
 
 ---
 

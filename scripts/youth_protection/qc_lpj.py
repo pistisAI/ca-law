@@ -8,7 +8,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-QC_LAW = Path(__file__).parents[1] / "qc_law.py"
+QC_LAW = Path(__file__).parents[1] / "provinces" / "qc_law.py"
 
 def get_article(article: str) -> str:
     """Fetch LPJ article verbatim via qc_law.py."""
